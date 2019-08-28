@@ -8,14 +8,12 @@ export default class App extends Component {
 		this.calcular = this.calcular.bind(this);
 	}
 
-
 	calcular() {
 		let imc = this.state.massa / (this.state.altura * this.state.altura);
 		let s = this.state;
 		s.resultado = imc;
 		this.setState(s);
 	}
-
 
 	render() {
 		return (
