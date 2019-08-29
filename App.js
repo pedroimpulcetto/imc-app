@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Props } from 'react-native';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { altura: 0, massa: 0, resultado: 0, resultadoText: '' };
+		this.state = {
+			altura: 0,
+			massa: 0,
+			resultado: 0,
+			resultadoText: ''
+		};
 		this.calcular = this.calcular.bind(this);
 	}
 
@@ -12,6 +17,21 @@ export default class App extends Component {
 		let imc = this.state.massa / (this.state.altura * this.state.altura);
 		let s = this.state;
 		s.resultado = imc;
+
+		if (imc < 18.5) {
+			s.resultadoText = 'Abaixo do Peso';
+		} else if (imc >= 18.5 && imc < 25) {
+			s.resultadoText = 'Peso Normal';
+		} else if (imc >= 25 && imc < 30) {
+			s.resultadoText = 'Sobrepeso';
+		} else if (imc >= 30 && imc < 35) {
+			s.resultadoText = 'Obesidade I';
+		} else if (imc >= 35 && imc < 40) {
+			s.resultadoText = 'Obesidade II';
+		} else {
+			s.resultadoText = 'Obesidade III';
+		}
+
 		this.setState(s);
 	}
 
@@ -23,16 +43,16 @@ export default class App extends Component {
 						placeholder="Massa"
 						keyboardType="numeric"
 						style={styles.input}
-						onChange={(altura) => {
-							this.setState({ altura });
+						onChangeText={(massa) => {
+							this.setState({ massa });
 						}}
 					/>
 					<TextInput
 						placeholder="Altura"
 						keyboardType="numeric"
 						style={styles.input}
-						onChange={(massa) => {
-							this.setState({ massa });
+						onChangeText={(altura) => {
+							this.setState({ altura });
 						}}
 					/>
 				</View>
