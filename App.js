@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Props } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Props, Image, Keyboard, ScrollView } from 'react-native';
 
 export default class App extends Component {
 	constructor(props) {
@@ -8,7 +8,13 @@ export default class App extends Component {
 			altura: 0,
 			massa: 0,
 			resultado: 0,
-			resultadoText: ''
+			resultadoText: require,
+			imagem01: require('./01.png'),
+			imagem02: require('./03.png'),
+			imagem03: require('./02.png'),
+			imagem04: require('./04.png'),
+			imagem05: require('./05.png'),
+			imagem06: require('./06.png')
 		};
 		this.calcular = this.calcular.bind(this);
 	}
@@ -19,17 +25,17 @@ export default class App extends Component {
 		s.resultado = imc;
 
 		if (imc < 18.5) {
-			s.resultadoText = 'Abaixo do Peso';
+			s.resultadoText = s.imagem01;
 		} else if (imc >= 18.5 && imc < 25) {
-			s.resultadoText = 'Peso Normal';
+			s.resultadoText = s.imagem02;
 		} else if (imc >= 25 && imc < 30) {
-			s.resultadoText = 'Sobrepeso';
+			s.resultadoText = s.imagem03;
 		} else if (imc >= 30 && imc < 35) {
-			s.resultadoText = 'Obesidade I';
+			s.resultadoText = s.imagem04;
 		} else if (imc >= 35 && imc < 40) {
-			s.resultadoText = 'Obesidade II';
+			s.resultadoText = s.imagem05;
 		} else {
-			s.resultadoText = 'Obesidade III';
+			s.resultadoText = s.imagem06;
 		}
 
 		this.setState(s);
@@ -37,7 +43,7 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container} keyboardDismissMode={'on-drag'}>
 				<View style={styles.entradas}>
 					<TextInput
 						placeholder="Massa"
@@ -61,9 +67,9 @@ export default class App extends Component {
 						<Text style={styles.botaoText}>Calcular</Text>
 					</TouchableOpacity>
 					<Text style={styles.resultado}>{this.state.resultado.toFixed(2)}</Text>
-					<Text style={[ styles.resultado, { fontSize: 35 } ]}>{this.state.resultadoText}</Text>
+					<Image style={styles.imagem} source={this.state.resultadoText} />
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
@@ -98,5 +104,11 @@ const styles = StyleSheet.create({
 		color: 'lightgray',
 		fontSize: 65,
 		padding: 15
+	},
+	imagem: {
+		width: 90,
+		height: 320,
+		textAlign: 'center',
+		alignSelf: 'center'
 	}
 });
